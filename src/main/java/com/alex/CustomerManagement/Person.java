@@ -23,7 +23,7 @@ final class Person extends Customer {
         ;
     }
 
-    // only for JPA
+    @OnlyJpa
     private Person() {
     }
 
