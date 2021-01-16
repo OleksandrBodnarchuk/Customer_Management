@@ -17,6 +17,7 @@ abstract class Customer {
     private UUID id;
 
     @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="customer_id")
     private List<Address> addresses;
 
     // Constructor with auto id generator
