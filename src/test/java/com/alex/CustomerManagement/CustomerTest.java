@@ -1,87 +1,58 @@
 package com.alex.CustomerManagement;
 
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.UUID;
+import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import org.hibernate.Hibernate;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
-
-import java.util.UUID;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-
 @SpringBootTest
-class CustomerTest {
-
-    @Autowired
-    private CustomerRepository repository;
-    @Autowired
-    EntityManager em;
+class CustomerTest extends EntityTest {
 
     @Test
     @Transactional
     void testCreatePerson() {
+        // given
+        final var person = new Person("Jan", "Nowak", "90282939393");
 
-        //  given
-        final var person = new Person("Jan", "Novak", "135795167");
-
-        //  when
+        // when
         save(person);
+
         // then
         assertEquals(person, readCustomer(person.getId()));
-
     }
 
     @Test
     @Transactional
     void testCreateCompany() {
+        // given
+        final var company = new Company("Test S.A.", "938493993");
 
-        //given
-        final var company = new Company("Test S.A", "45643463");
-
-        //when
+        // when
         save(company);
 
-        //then
+        // then
         assertEquals(company, readCustomer(company.getId()));
-
     }
 
     @Test
     @Transactional
-    void testAddAddress(){
-
-        //given
-        final var customer = new Company("Test S.A", "546546463");
-        final var address = new Address("str","Warsaw","77-100","PL");
+    void testAddAddress() {
+        // given
+        final var customer = new Company("Test S.A.", "929030202");
+        final var address = new Address("str", "wawa", "01-200", "PL");
         customer.addAddress(address);
 
         // when
         save(customer);
 
-        //then
+        // then
         final var readCustomer = readCustomer(customer.getId());
         assertEquals(1, readCustomer.getAddresses().size());
         assertTrue(readCustomer.getAddresses().contains(address));
-
     }
-
-
-    private Customer readCustomer(UUID id) {
-        return Hibernate.unproxy(repository.getOne(id), Customer.class);
-    }
-
-    private void save(Customer customer) {
-        repository.save(customer);
-        clearCache();
-    }
-
-    private void clearCache() {
-        em.flush();
-        em.clear();
-    }
-
 }

@@ -1,32 +1,27 @@
 package com.alex.CustomerManagement;
 
+import static java.util.Objects.requireNonNull;
+
+import java.util.Objects;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import java.util.Objects;
-
-import static java.util.Objects.requireNonNull;
 
 @Entity
 @DiscriminatorValue("PERSON")
 final class Person extends Customer {
+
     private String firstName;
     private String lastName;
     private String pesel;
 
-    public Person(String firstName, String lastName, String pesel) {
+    @OnlyJpa
+    private Person() {}
 
-        //  check for empty parameter
+    Person(String firstName, String lastName, String pesel) {
         this.firstName = requireNonNull(firstName);
         this.lastName = requireNonNull(lastName);
-        ;
         this.pesel = requireNonNull(pesel);
-        ;
     }
-
-    @OnlyJpa
-    private Person() {
-    }
-
 
     public String getFirstName() {
         return firstName;
@@ -42,23 +37,21 @@ final class Person extends Customer {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
         Person person = (Person) o;
-
-        if (!firstName.equals(person.firstName)) return false;
-        if (!lastName.equals(person.lastName)) return false;
-        return pesel.equals(person.pesel);
+        return firstName.equals(person.firstName) && lastName.equals(person.lastName) && pesel.equals(person.pesel);
     }
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + firstName.hashCode();
-        result = 31 * result + lastName.hashCode();
-        result = 31 * result + pesel.hashCode();
-        return result;
+        return Objects.hash(super.hashCode(), firstName, lastName, pesel);
     }
 }

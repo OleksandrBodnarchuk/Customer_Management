@@ -1,22 +1,22 @@
 package com.alex.CustomerManagement;
 
+import static java.util.Objects.requireNonNull;
+
+import java.util.Objects;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
-import static java.util.Objects.requireNonNull;
-
 @Entity
 @DiscriminatorValue("COMPANY")
-final class Company extends Customer{
+final class Company extends Customer {
 
     private String name;
     private String vatNumber;
 
     @OnlyJpa
-    private Company() {
-    }
+    private Company() {}
 
-    public Company(String name, String vatNumber) {
+    Company(String name, String vatNumber) {
         this.name = requireNonNull(name);
         this.vatNumber = requireNonNull(vatNumber);
     }
@@ -29,4 +29,23 @@ final class Company extends Customer{
         return vatNumber;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        Company company = (Company) o;
+        return name.equals(company.name) && vatNumber.equals(company.vatNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), name, vatNumber);
+    }
 }

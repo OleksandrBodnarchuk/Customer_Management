@@ -1,11 +1,21 @@
 package com.alex.CustomerManagement;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
 import static java.util.Collections.unmodifiableList;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
+import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "customers")
@@ -17,20 +27,17 @@ abstract class Customer {
     private UUID id;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="customer_id")
+    @JoinColumn(name = "customer_id")
     private List<Address> addresses;
 
-    // Constructor with auto id generator
-    public Customer() {
+    protected Customer() {
         this.id = UUID.randomUUID();
         this.addresses = new ArrayList<>();
     }
 
-    // Getter for Id
     public UUID getId() {
         return id;
     }
-
 
     public void addAddress(Address address) {
         if (!addresses.contains(address)) {
@@ -46,19 +53,20 @@ abstract class Customer {
         return unmodifiableList(addresses);
     }
 
-    // adding non null equals and hashcode
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Customer customer = (Customer) o;
-
         return id.equals(customer.id);
     }
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return Objects.hash(id);
     }
 }
