@@ -1,10 +1,8 @@
 package com.alex.CustomerManagement.api;
 
 import com.alex.CustomerManagement.domain.CustomerFacade;
-import com.alex.CustomerManagement.dto.CustomerDto;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.alex.CustomerManagement.dto.*;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,8 +18,23 @@ final class CustomerRestApi {
         this.facade = requireNonNull(facade);
     }
 
+//    @GetMapping
+//    List<CustomerDto> findAll() {
+//        return facade.findAll();
+//    }
+
+    @PostMapping(params = { "type=person" })
+    PersonDto createPerson(@RequestBody CreatePersonDto dto) {
+        return facade.createPerson(dto);
+    }
+
+    @PostMapping(params = { "type=company" })
+    CompanyDto createCompany(@RequestBody CreateCompanyDto dto) {
+        return facade.createCompany(dto);
+    }
+
     @GetMapping
-    List<CustomerDto> findAll() {
-        return facade.findAll();
+    List<CustomerDto> filterPerson(PersonFilterDto dto) {
+        return facade.filterPerson(dto);
     }
 }

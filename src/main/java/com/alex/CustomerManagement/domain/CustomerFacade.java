@@ -1,11 +1,11 @@
 package com.alex.CustomerManagement.domain;
 
-import com.alex.CustomerManagement.dto.CreatePersonDto;
-import com.alex.CustomerManagement.dto.CustomerDto;
-import com.alex.CustomerManagement.dto.PersonDto;
-import org.springframework.stereotype.Service;
+
 
 import java.util.List;
+
+import com.alex.CustomerManagement.dto.*;
+import org.springframework.stereotype.Service;
 
 @Service
 public class CustomerFacade {
@@ -27,4 +27,11 @@ public class CustomerFacade {
     }
 
 
+    public CompanyDto createCompany(CreateCompanyDto dto) {
+        return service.createCompany(dto);
+    }
+
+    public List<CustomerDto> filterPerson(PersonFilterDto dto) {
+        return query.filterPerson(dto);
+    }
 }
