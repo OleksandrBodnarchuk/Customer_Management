@@ -4,7 +4,6 @@ import static java.util.Arrays.asList;
 
 import java.util.UUID;
 import javax.persistence.EntityManager;
-
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 

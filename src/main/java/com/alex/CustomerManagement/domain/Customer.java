@@ -20,7 +20,7 @@ import javax.persistence.Table;
 @Table(name = "customers")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "customer_type")
-public abstract class Customer {
+abstract class Customer {
 
     @Id
     private UUID id;

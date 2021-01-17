@@ -1,8 +1,10 @@
 package com.alex.CustomerManagement.dto;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public final class CompanyDto {
+
     private final UUID id;
     private final String name;
     private final String vatNumber;
@@ -27,21 +29,18 @@ public final class CompanyDto {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         CompanyDto that = (CompanyDto) o;
-
-        if (!id.equals(that.id)) return false;
-        if (!name.equals(that.name)) return false;
-        return vatNumber.equals(that.vatNumber);
+        return id.equals(that.id) && name.equals(that.name) && vatNumber.equals(that.vatNumber);
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + name.hashCode();
-        result = 31 * result + vatNumber.hashCode();
-        return result;
+        return Objects.hash(id, name, vatNumber);
     }
 }

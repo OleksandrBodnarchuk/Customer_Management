@@ -1,10 +1,9 @@
 package com.alex.CustomerManagement.dto;
 
+import java.util.Objects;
 import java.util.UUID;
 
-import static java.util.Objects.requireNonNull;
-
-public class PersonDto {
+public final class PersonDto {
 
     private final UUID id;
     private final String firstName;
@@ -12,10 +11,10 @@ public class PersonDto {
     private final String pesel;
 
     public PersonDto(UUID id, String firstName, String lastName, String pesel) {
-        this.id = requireNonNull(id);
-        this.firstName = requireNonNull(firstName);
-        this.lastName = requireNonNull(lastName);
-        this.pesel = requireNonNull(pesel);
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.pesel = pesel;
     }
 
     public UUID getId() {
@@ -36,23 +35,19 @@ public class PersonDto {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         PersonDto personDto = (PersonDto) o;
-
-        if (!id.equals(personDto.id)) return false;
-        if (!firstName.equals(personDto.firstName)) return false;
-        if (!lastName.equals(personDto.lastName)) return false;
-        return pesel.equals(personDto.pesel);
+        return id.equals(personDto.id) && firstName.equals(personDto.firstName) && lastName.equals(personDto.lastName)
+            && pesel.equals(personDto.pesel);
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + firstName.hashCode();
-        result = 31 * result + lastName.hashCode();
-        result = 31 * result + pesel.hashCode();
-        return result;
+        return Objects.hash(id, firstName, lastName, pesel);
     }
 }

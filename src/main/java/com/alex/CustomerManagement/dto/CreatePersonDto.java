@@ -1,5 +1,7 @@
 package com.alex.CustomerManagement.dto;
 
+import java.util.Objects;
+
 public final class CreatePersonDto {
 
     private final String firstName;
@@ -26,21 +28,18 @@ public final class CreatePersonDto {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         CreatePersonDto that = (CreatePersonDto) o;
-
-        if (!firstName.equals(that.firstName)) return false;
-        if (!lastName.equals(that.lastName)) return false;
-        return pesel.equals(that.pesel);
+        return firstName.equals(that.firstName) && lastName.equals(that.lastName) && pesel.equals(that.pesel);
     }
 
     @Override
     public int hashCode() {
-        int result = firstName.hashCode();
-        result = 31 * result + lastName.hashCode();
-        result = 31 * result + pesel.hashCode();
-        return result;
+        return Objects.hash(firstName, lastName, pesel);
     }
 }

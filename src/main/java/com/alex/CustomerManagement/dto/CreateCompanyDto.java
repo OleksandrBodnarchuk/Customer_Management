@@ -1,10 +1,11 @@
 package com.alex.CustomerManagement.dto;
 
+import java.util.Objects;
+
 public final class CreateCompanyDto {
 
     private final String name;
     private final String vatNumber;
-
 
     public CreateCompanyDto(String name, String vatNumber) {
         this.name = name;
@@ -21,19 +22,18 @@ public final class CreateCompanyDto {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         CreateCompanyDto that = (CreateCompanyDto) o;
-
-        if (!name.equals(that.name)) return false;
-        return vatNumber.equals(that.vatNumber);
+        return name.equals(that.name) && vatNumber.equals(that.vatNumber);
     }
 
     @Override
     public int hashCode() {
-        int result = name.hashCode();
-        result = 31 * result + vatNumber.hashCode();
-        return result;
+        return Objects.hash(name, vatNumber);
     }
 }

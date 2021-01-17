@@ -4,8 +4,10 @@ import com.alex.CustomerManagement.util.OnlyJpa;
 
 import static java.util.Objects.requireNonNull;
 
+
 import java.util.Objects;
 import javax.persistence.DiscriminatorValue;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 
 @Entity
@@ -13,12 +15,14 @@ import javax.persistence.Entity;
 final class Company extends Customer {
 
     private String name;
-    private String vatNumber;
+
+    @Embedded
+    private VatNumber vatNumber;
 
     @OnlyJpa
     private Company() {}
 
-    Company(String name, String vatNumber) {
+    Company(String name, VatNumber vatNumber) {
         this.name = requireNonNull(name);
         this.vatNumber = requireNonNull(vatNumber);
     }
@@ -27,7 +31,7 @@ final class Company extends Customer {
         return name;
     }
 
-    public String getVatNumber() {
+    public VatNumber getVatNumber() {
         return vatNumber;
     }
 

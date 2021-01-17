@@ -4,6 +4,7 @@ import com.alex.CustomerManagement.util.OnlyJpa;
 
 import static java.util.Objects.requireNonNull;
 
+
 import java.util.Objects;
 import java.util.UUID;
 import javax.persistence.Entity;
