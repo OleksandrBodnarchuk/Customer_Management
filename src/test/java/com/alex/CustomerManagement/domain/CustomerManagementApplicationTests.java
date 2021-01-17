@@ -1,4 +1,4 @@
-package com.alex.CustomerManagement;
+package com.alex.CustomerManagement.domain;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

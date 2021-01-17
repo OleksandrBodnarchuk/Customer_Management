@@ -1,4 +1,6 @@
-package com.alex.CustomerManagement;
+package com.alex.CustomerManagement.domain;
+
+import com.alex.CustomerManagement.util.OnlyJpa;
 
 import static java.util.Objects.requireNonNull;
 

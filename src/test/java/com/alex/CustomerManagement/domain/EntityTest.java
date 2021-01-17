@@ -1,9 +1,10 @@
-package com.alex.CustomerManagement;
+package com.alex.CustomerManagement.domain;
 
 import static java.util.Arrays.asList;
 
 import java.util.UUID;
 import javax.persistence.EntityManager;
+
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,7 +15,7 @@ abstract class EntityTest {
     @Autowired
     protected EntityManager em;
 
-    protected void saveAll(Customer ...customers) {
+    protected void saveAll(Customer...customers) {
         repository.saveAll(asList(customers));
         em.flush();
         em.clear();

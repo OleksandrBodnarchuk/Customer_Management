@@ -1,9 +1,8 @@
-package com.alex.CustomerManagement;
+package com.alex.CustomerManagement.domain;
 
 import static java.util.Collections.unmodifiableList;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -21,7 +20,7 @@ import javax.persistence.Table;
 @Table(name = "customers")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "customer_type")
-abstract class Customer {
+public abstract class Customer {
 
     @Id
     private UUID id;

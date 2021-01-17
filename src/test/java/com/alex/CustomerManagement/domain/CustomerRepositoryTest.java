@@ -1,6 +1,6 @@
-package com.alex.CustomerManagement;
+package com.alex.CustomerManagement.domain;
 
-import static com.alex.CustomerManagement.CustomerSpec.withPersonFilter;
+import static com.alex.CustomerManagement.domain.CustomerSpec.withPersonFilter;
 
 import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.math.BigInteger;
 import javax.transaction.Transactional;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -32,8 +33,8 @@ class CustomerRepositoryTest extends EntityTest {
         final var customers = repository.findByCity("warszawa");
 
         // then
-        assertEquals(2, customers.size());
-        assertTrue(customers.containsAll(asList(customer1, customer3)));
+        Assertions.assertEquals(2, customers.size());
+        Assertions.assertTrue(customers.containsAll(asList(customer1, customer3)));
     }
 
     @Test
@@ -52,9 +53,9 @@ class CustomerRepositoryTest extends EntityTest {
         final var results = repository.countByCity();
 
         // then
-        assertEquals(2, results.size());
-        assertArrayEquals(new Object[]{BigInteger.valueOf(1), "Kraków"}, results.get(0));
-        assertArrayEquals(new Object[]{BigInteger.valueOf(2), "Warszawa"}, results.get(1));
+        Assertions.assertEquals(2, results.size());
+        Assertions.assertArrayEquals(new Object[]{BigInteger.valueOf(1), "Kraków"}, results.get(0));
+        Assertions.assertArrayEquals(new Object[]{BigInteger.valueOf(2), "Warszawa"}, results.get(1));
     }
 
     @Test
@@ -73,13 +74,13 @@ class CustomerRepositoryTest extends EntityTest {
         final var results = repository.countByCityWithType();
 
         // then
-        assertEquals(2, results.size());
+        Assertions.assertEquals(2, results.size());
         final var row1 = results.get(0);
-        assertEquals("Kraków", row1.getCity());
-        assertEquals(1, row1.getCount());
+        Assertions.assertEquals("Kraków", row1.getCity());
+        Assertions.assertEquals(1, row1.getCount());
         final var row2 = results.get(1);
-        assertEquals("Warszawa", row2.getCity());
-        assertEquals(2, row2.getCount());
+        Assertions.assertEquals("Warszawa", row2.getCity());
+        Assertions.assertEquals(2, row2.getCount());
     }
 
     @Test
@@ -93,7 +94,7 @@ class CustomerRepositoryTest extends EntityTest {
         final var updated = repository.updatePersonName(person.getId(), "Janek", "Nowaky");
 
         // then
-        assertEquals(1, updated);
+        Assertions.assertEquals(1, updated);
         final var readPerson = (Person) readCustomer(person.getId());
         assertEquals("Janek", readPerson.getFirstName());
         assertEquals("Nowaky", readPerson.getLastName());
@@ -112,24 +113,24 @@ class CustomerRepositoryTest extends EntityTest {
         // when - filter is empty
         var results = repository.findAll(withPersonFilter(new CustomerSpec.PersonFilter(null, null, null)));
         // then
-        assertEquals(4, results.size());
+        Assertions.assertEquals(4, results.size());
 
         // when - filter by firstName
         results = repository.findAll(withPersonFilter(new CustomerSpec.PersonFilter("Jan", null, null)));
         // then
-        assertEquals(1, results.size());
-        assertTrue(results.contains(customer1));
+        Assertions.assertEquals(1, results.size());
+        Assertions.assertTrue(results.contains(customer1));
 
         // when - filter by lastName
         results = repository.findAll(withPersonFilter(new CustomerSpec.PersonFilter("Ada", "Kow", null)));
         // then
-        assertEquals(1, results.size());
-        assertTrue(results.contains(customer4));
+        Assertions.assertEquals(1, results.size());
+        Assertions.assertTrue(results.contains(customer4));
 
         // when - filter by pesel
         results = repository.findAll(withPersonFilter(new CustomerSpec.PersonFilter(null, null, "928")));
         // then
-        assertEquals(2, results.size());
-        assertTrue(results.containsAll(asList(customer1, customer4)));
+        Assertions.assertEquals(2, results.size());
+        Assertions.assertTrue(results.containsAll(asList(customer1, customer4)));
     }
 }

@@ -1,13 +1,10 @@
-package com.alex.CustomerManagement;
+package com.alex.CustomerManagement.domain;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.UUID;
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
-import org.hibernate.Hibernate;
+
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
