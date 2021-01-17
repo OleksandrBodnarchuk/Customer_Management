@@ -1,5 +1,6 @@
 package com.alex.CustomerManagement.domain;
 
+import com.alex.CustomerManagement.dto.CreateCompanyDto;
 import com.alex.CustomerManagement.dto.CreatePersonDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,23 @@ class CustomerServiceTest {
         assertEquals("Jan", person.getFirstName());
         assertEquals("Go", person.getLastName());
         assertEquals("4652317823", person.getPesel());
+
+    }
+
+    @Test
+    @Transactional
+    void testCreateCompany(){
+        //given
+        final var dto = new CreateCompanyDto("Test S.A", "4564324654");
+
+        //when
+        final var company = service.createCompany(dto);
+
+        //then
+        assertNotNull(company);
+        assertNotNull(company.getId());
+        assertEquals("Test S.A", company.getName());
+        assertEquals("4564324654", company.getVatNumber());
 
     }
 }

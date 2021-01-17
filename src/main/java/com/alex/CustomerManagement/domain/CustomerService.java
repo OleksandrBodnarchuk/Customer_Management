@@ -1,5 +1,7 @@
 package com.alex.CustomerManagement.domain;
 
+import com.alex.CustomerManagement.dto.CompanyDto;
+import com.alex.CustomerManagement.dto.CreateCompanyDto;
 import com.alex.CustomerManagement.dto.CreatePersonDto;
 import com.alex.CustomerManagement.dto.PersonDto;
 import org.springframework.stereotype.Service;
@@ -26,7 +28,9 @@ class CustomerService {
         return new PersonDto(person.getId(), person.getFirstName(), person.getLastName(), person.getPesel());
     }
 
-    void createCompany() {
-
+    CompanyDto createCompany(CreateCompanyDto dto) {
+        final var company = new Company(dto.getName(), dto.getVatNumber());
+        repository.save(company);
+        return new CompanyDto(company.getId(), company.getName(), company.getVatNumber());
     }
 }
